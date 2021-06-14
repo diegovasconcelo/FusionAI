@@ -1,0 +1,11 @@
+.DS_Store
+
+#Key
+secret.json
+
+#Images  
+media
+
+#Production
+prod.py
+docker-compose.yml

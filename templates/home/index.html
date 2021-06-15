@@ -11,11 +11,11 @@
   <div class="row mb-2">
     <div class="col-12 col-md-12">
       <div class="card" style="width: 50rem;">
-        <img src="{{ cover_page.image.url }}" class="card-img-top" alt="...">
+        <img src="{{ cover_page.image.url }}" class="card-img-top" alt="{{ cover_page.title }}">
         <div class="card-body">
           <h5 class="card-title">{{ cover_page.title }}</h5>
           <p class="card-text">{{ cover_page.content|safe|truncatewords:40 }}</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <a href="{% url 'post_app:detail' cover_page.id %}" class="btn btn-primary">Read more</a>
         </div>
       </div>
     </div>
@@ -24,16 +24,55 @@
     <div class="row row-cols-1 row-cols-md-2 g-4">
       {% for i in articles %}
         <div class="col">
-          <div class="card" style="width: 30rem;">
+          <div class="card h-100">
             <img src="{{ i.image.url }}" class="card-img-top" alt="{{ i.title }}">
             <div class="card-body">
               <h5 class="card-title">{{ i.title|truncatechars:100 }}</h5>
-              <!-- <p class="card-text">{{ i.content|safe|truncatewords:30 }}</p> -->
+              <p class="card-text">{{ i.content|safe|truncatewords_html:30 }}</p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="{% url 'post_app:detail' i.id %}" class="btn btn-primary">Read more</a>
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
+
+    <div class="alert border-primary" role="alert">
+      Contact
+    </div>
+
+    <div class="card">
+      <h5 class="card-header">{{ home.about_title }}</h5>
+      <div class="card-body">
+        <h5 class="card-title">{{ home.about_title }}</h5>
+        <p class="card-text">{{ home.about_text }}</p>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Subscribe
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Subscribe</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form method="post" action="{% url 'home_app:add_subscription' %}">
+                <div class="modal-body">
+                  {% csrf_token %}
+                  {{form.email}}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Send email</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <div class="alert border-primary" role="alert">
       Lo más recientes
@@ -42,16 +81,20 @@
     <div class="row row-cols-1 row-cols-md-2 g-4">
       {% for article in last_articles %}
         <div class="col">
-          <div class="card" style="width: 30rem;">
+          <div class="card h-100">
             <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}">
             <div class="card-body">
               <h5 class="card-title">{{ article.title|truncatechars:100 }}</h5>
-              <!-- <p class="card-text">{{ i.content|safe|truncatewords:30 }}</p> -->
+              <p class="card-text">{{ article.content|safe|truncatewords_html:30 }}</p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="{% url 'post_app:detail' article.id %}" class="btn btn-primary">Read more</a>
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
+  </div>
 
 
 </div>

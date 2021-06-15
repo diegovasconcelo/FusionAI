@@ -33,7 +33,7 @@ class Subscriber(TimeStampedModel):
 class Contact(TimeStampedModel):
     full_name = models.CharField(max_length=100, verbose_name='Nombre completo')
     email = models.EmailField(verbose_name='correo')
-    messagge = models.TextField(verbose_name='mensaje')
+    message = models.TextField(verbose_name='mensaje')
 
     class Meta:
         verbose_name='contacto'

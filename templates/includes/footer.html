@@ -1,0 +1,28 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col">
+            <h3>Contact</h3>
+            <form class="form-control" method="POST" action="{% url 'home_app:message_contact' %}">
+                {%csrf_token%}
+                
+                <div class="mb-3">
+                    <input type="text" name="full_name" placeholder="Name" class="form-control" maxlength="100" required="" id="id_full_name">
+                </div>
+
+                <div class="mb-3">
+                    <input type="email" name="email" placeholder="email" class="form-control" maxlength="254" required="" id="id_email">
+                </div>
+
+                <div class="mb-3">
+                    <textarea class="form-control" name= "message" id="id_message" rows="3" placeholder="Message"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">Send</button>
+ 
+            </form>
+        </div>
+        
+
+    </div>
+</div>

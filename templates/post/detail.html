@@ -1,0 +1,27 @@
+{% extends 'post/base_post.html'%}
+
+{% load static %}
+
+{% block content %}
+
+    {% include 'includes/header.html' %}
+
+    <div class="container">
+        <h1>{{article.title}}</h1>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card h-100"> 
+                    <div class="card-body">
+                        <h5 class="card-title">{{article.title}}</h5>
+                        <p class="card-text text-muted">{{article.content|safe}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {% include 'includes/footer.html' %}
+
+{% endblock content %}

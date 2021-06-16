@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from applications.post.models import Article
+from .managers import FavoriteManager
 # Third_party app
 from model_utils.models import TimeStampedModel
 
@@ -17,6 +18,8 @@ class Favorite(TimeStampedModel):
         on_delete=models.CASCADE,
         verbose_name='entrada'
     )
+
+    objects = FavoriteManager()
 
     class Meta:
         unique_together = ('user', 'article')

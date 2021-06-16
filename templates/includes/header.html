@@ -13,7 +13,13 @@
             <a class="nav-link" href="{% url 'post_app:list' %}">Blog</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Sign In</a>
+            <a class="nav-link" href="{% url 'users_app:userLogin' %}">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users_app:userLogout' %}">Log Out</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Sign Up</a>
           </li>
           <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

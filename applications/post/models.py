@@ -1,5 +1,8 @@
+from datetime import timedelta, datetime
+
 from django.db import models
 from django.conf import settings
+from django.template.defaultfilters import slugify
 # Third_party app
 from model_utils.models import TimeStampedModel
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -50,3 +53,14 @@ class Article(TimeStampedModel):
     
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        #Generate unic slug
+        now = datetime.now()
+        total_time = timedelta(hours=now.hour, minutes=now.minute, seconds=now.second)
+        seconds = int(total_time.total_seconds())
+
+        slug_unique = '%s %s' % (self.title, str(seconds))
+        self.slug = slugify(slug_unique)
+
+        super(Article, self).save(*args, **kwargs)

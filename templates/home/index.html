@@ -2,6 +2,9 @@
 
 {% load static %}
 
+{% block title %}{{home.title}}{% endblock title%}
+{% block description %}{{home.description}}{% endblock description%}
+
 {% block content %}
 
 {% include 'includes/header.html' %}
@@ -15,7 +18,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ cover_page.title }}</h5>
           <p class="card-text">{{ cover_page.content|safe|truncatewords:40 }}</p>
-          <a href="{% url 'post_app:detail' cover_page.id %}" class="btn btn-primary">Read more</a>
+          <a href="{% url 'post_app:detail' cover_page.slug %}" class="btn btn-primary">Read more</a>
         </div>
       </div>
     </div>
@@ -31,7 +34,7 @@
               <p class="card-text">{{ i.content|safe|truncatewords_html:30 }}</p>
             </div>
             <div class="card-footer text-center">
-              <a href="{% url 'post_app:detail' i.id %}" class="btn btn-primary">Read more</a>
+              <a href="{% url 'post_app:detail' i.slug %}" class="btn btn-primary">Read more</a>
             </div>
           </div>
         </div>
@@ -88,7 +91,7 @@
               <p class="card-text">{{ article.content|safe|truncatewords_html:30 }}</p>
             </div>
             <div class="card-footer text-center">
-              <a href="{% url 'post_app:detail' article.id %}" class="btn btn-primary">Read more</a>
+              <a href="{% url 'post_app:detail' article.slug %}" class="btn btn-primary">Read more</a>
             </div>
           </div>
         </div>

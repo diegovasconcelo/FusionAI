@@ -2,15 +2,17 @@
 
 {% load static %}
 
+{% block title %}Posts {{article.title}}{% endblock title %}
+
 {% block content %}
 
     {% include 'includes/header.html' %}
 
     <div class="container">
-        <h1>listado</h1>
+        <h1>Posts</h1>
 
         <div class="row">
-            <div class="col-8 mb-2">
+            <div class="col-12 col-sm-12 col-lg-8 mb-2">
                 <form class="d-flex" method="GET">
                     {% csrf_token %}
                     <input class="form-control me-2" type="search" name="kword" placeholder="Search" aria-label="Search">
@@ -20,7 +22,7 @@
         </div>
 
         <div class="row">
-            <div class="col-8">
+            <div class="col-12 col-sm-12 col-lg-8">
                 
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     {% for post in posts %}
@@ -29,10 +31,17 @@
                                 <img src="{{post.image.url}}" class="card-img-top" alt="{{post.title}}">
                                 <div class="card-body">
                                     <h5 class="card-title">{{post.title}}</h5>
+                                    
+                                    <ul class="list-group list-group-horizontal">
+                                        {% for t in post.tag.all %}
+                                            <li class="list-group-item rounded-pill "><small>{{t.tag|truncatechars:17}}</small></li>
+                                        {%endfor%}
+                                    </ul>
+
                                     <p class="card-text text-muted">{{post.content|truncatewords_html:20|safe}}</p>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <a href="{% url 'post_app:detail' post.id %}" class="btn btn-primary">Read more</a>
+                                    <a href="{% url 'post_app:detail' post.slug %}" class="btn btn-primary">Read more</a>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +58,7 @@
 
             </div>
         
-            <div class="col-4">
+            <div class="col-12 col-sm-12 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                     <h5 class="card-title">Categories</h5>

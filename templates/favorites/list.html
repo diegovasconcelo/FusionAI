@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% block title %}{{user.names|capfirst}}'s &#128420; list{% endblock title%}
+
 {% block content %}
 
     {% include 'includes/header.html' %}
@@ -35,7 +37,7 @@
                                 <form method="POST" action="{% url 'favorites_app:favoriteRemove' post.id %}">
                                     {% csrf_token %}
                                     <div class="card-footer text-center">
-                                        <a href="{% url 'post_app:detail' post.article.id %}" class="btn btn-primary">Read more</a>
+                                        <a href="{% url 'post_app:detail' post.article.slug %}" class="btn btn-primary">Read more</a>
                                         <button type="submit" class="btn btn-danger">Remove</button>
                                     </div>    
                                 </form>
@@ -57,7 +59,7 @@
             <div class="col-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{user.names|capfirst}} {{user.last_name|capfirst}}</h5>
+                        <h5 class="card-title text-center">{{user.names|capfirst}} {{user.last_name|capfirst}}</h5>
                         <p class="card-text">
                         <small class="text-muted">Occupation: </small>{{user.occupation|capfirst}}
                         </p>
@@ -67,7 +69,7 @@
                         <p class="card-text">
                         <small class="text-muted">Born: </small>{{user.date_of_birth}}
                         </p>
-                        <p class="card-text"><small class="text-muted">Since: {{user.created}}</small></p>
+                        <p class="card-text"><small class="text-muted">Last time: {{user.last_login}}</small></p>
                     </div>
                     <div class="card-footer text-center">
                         <a href="{% url 'users_app:userPasswordUpdate' %}" class="btn btn-primary">Change Password</a>

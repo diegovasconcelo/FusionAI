@@ -7,8 +7,18 @@
     {% include 'includes/header.html' %}
 
     <div class="container">
-        <h1>{{article.title}}</h1>
-
+        <div class="row">
+            <h1 class="text-center">{{article.title}}</h1>
+            <div class="col-12 m-3">
+                <form method="POST" action="{% url 'favorites_app:favoriteAdd' article.id %}">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2 d-md-block text-center">
+                        <button class="btn border-secondary me-md-2" type="submit">add to favorite &#128420;</button>
+                        <button class="btn border-secondary" type="button">Copy link to share &#128279;</button>
+                    </form>
+                  </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card h-100"> 

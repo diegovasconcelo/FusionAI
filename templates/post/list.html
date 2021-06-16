@@ -26,10 +26,13 @@
                     {% for post in posts %}
                         <div class="col">
                             <div class="card" style="height: 100%;">
-                            <img src="{{post.image.url}}" class="card-img-top" alt="{{post.title}}">
+                                <img src="{{post.image.url}}" class="card-img-top" alt="{{post.title}}">
                                 <div class="card-body">
                                     <h5 class="card-title">{{post.title}}</h5>
                                     <p class="card-text text-muted">{{post.content|truncatewords_html:20|safe}}</p>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <a href="{% url 'post_app:detail' post.id %}" class="btn btn-primary">Read more</a>
                                 </div>
                             </div>
                         </div>

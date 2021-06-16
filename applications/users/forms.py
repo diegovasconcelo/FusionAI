@@ -16,7 +16,14 @@ class UserRegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['email','names','last_name','gender']
+        fields = ['email','names','last_name','occupation','gender','date_of_birth']
+        widgets = {
+            'date_of_birth': forms.DateInput(
+                attrs = {
+                    'type' : 'date'
+                },
+            )
+        }
 
     def clean_password2(self):
         password1 = self.cleaned_data['password1']
@@ -30,9 +37,9 @@ class UserRegisterForm(forms.ModelForm):
 
 class UserLoginForm(forms.Form):
     email = forms.CharField(
-        label = 'Usuario',
+        label = 'Email',
         required = True,
-        widget = forms.TextInput()
+        widget = forms.EmailInput()
     )
     password = forms.CharField(
         label = 'Contraseña',

@@ -1,18 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users</title>
-</head>
-<body>
-    <h1>Identifícate</h1>
-    <form method="post">
-        {% csrf_token %}
+{% extends 'users/base_users.html' %}
 
-        {{form.as_p}}
+{% load static %}
 
-        <input type="submit" value="Ingresar">
-    </form>
-</body>
-</html>
+{% block content %}
+
+{% include 'includes/header.html' %}
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-12 col-md-12">
+      <div class="card">
+        <h5 class="card-header">Log In to FuisionAI </h5>
+        <div class="card-body">
+            <form method="post" class="form-control">
+                {% csrf_token %}
+            
+                {{form.as_p}}
+                <button type="submit" class="btn btn-primary m-2">Log In</button>
+              </form>
+            <p class="text-center text-decoration-none mt-4">
+                <small>If you don't have an account <a href="{% url 'users_app:userRegister'%}">Sign Up.</a></small>
+            </p>
+        </div>
+      </div>
+    </div>
+  </div>  
+    
+</div>
+
+
+{% endblock content %}

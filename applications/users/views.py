@@ -28,7 +28,7 @@ def get_secret(secret_name, secrets=secret):
 class UserRegister(generic.FormView):
     template_name = 'users/register.html'
     form_class = UserRegisterForm
-    success_url = '/'
+    success_url = reverse_lazy('home_app:index')
 
     def form_valid(self, form):
         
@@ -36,12 +36,13 @@ class UserRegister(generic.FormView):
         code = code_generator()
 
         user = User.objects.create_user(
-            username = form.cleaned_data['username'],
             email = form.cleaned_data['email'],
-            password = form.cleaned_data['password1'],
             names = form.cleaned_data['names'],
             last_name = form.cleaned_data['last_name'],
+            occupation = form.cleaned_data['occupation'],
             gender = form.cleaned_data['gender'],
+            date_of_birth = form.cleaned_data['date_of_birth'],
+            password = form.cleaned_data['password1'],
             confirm_code = code
         )
 
@@ -62,12 +63,11 @@ class UserRegister(generic.FormView):
 class UserLogin(generic.FormView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
-    success_url = '/panel'
-    #modificar
+    success_url = reverse_lazy('favorites_app:favoriteItems')
 
     def form_valid(self, form):
         user = authenticate(
-            username=form.cleaned_data['username'],
+            email=form.cleaned_data['email'],
             password = form.cleaned_data['password']
         )
 

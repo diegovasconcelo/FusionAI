@@ -1,44 +1,46 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home_app:index' %}">FuisionAI</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'home_app:index' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'post_app:list' %}">Blog</a>
-          </li>
-          {% if user.id %}
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Hello, {{user.names}}
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{% url 'favorites_app:favoriteItems' %}">Favorites</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'users_app:userLogout' %}">Log Out</a></li>
-              </ul>
-            </li>
-          {% else %}
+<header>
+  <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home_app:index' %}">FuisionAI</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"><span id="toggler-icon">|||</span></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'users_app:userLogin' %}">Log In</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'home_app:index' %}">Home</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'post_app:list' %}">Blog</a>
+            </li>
+            {% if user.id %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Hello, {{user.names}}
+                </a>
+                <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{% url 'favorites_app:favoriteItems' %}">Favorites</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'users_app:userLogout' %}">Log Out</a></li>
+                </ul>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'users_app:userLogin' %}">Log In</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'users_app:userRegister' %}">Sign Up</a>
+              </li>
+            {% endif %}
             
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'users_app:userRegister' %}">Sign Up</a>
-            </li>
-          {% endif %}
-          
-        </ul>
-        <!-- <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form> -->
+          </ul>
+          <!-- <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form> -->
+        </div>
       </div>
-    </div>
   </nav>
+</header>

@@ -1,0 +1,170 @@
+
+* {
+    margin:0;
+    padding:0;
+}
+
+body{
+    animation: fluido 10s ease-in-out infinite;
+    color:#EDF2F7;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+body{
+background: linear-gradient(135deg, #f1c013, #ec3d5d, #b137a9, #6e6eee, #33b3e2,#05f4bc);
+background-size: 300%;
+}
+
+@keyframes fluido {
+    0% { background-position: 0 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0 50% }
+}
+
+h1, h2 {
+    font-family: Verdana,Arial, Helvetica, sans-serif, Tahoma, sans-serif;
+}
+
+
+
+header{
+    width: 100%;
+    background-color: #1a1a1a!important;
+}
+
+
+.logo {
+    width: 10%;
+    margin-left: 20px;
+    height: 35px;
+    width: 30px;
+}
+
+#toggler-icon{
+    display:inline-block;
+    transform: rotate(90deg);
+    color: #848e89;
+}
+
+nav a {
+    color:#6c757d!important;
+    text-decoration: none;
+}
+
+
+.navbar-icon{
+    display: inline-block;
+    transform: rotate(90deg);
+    color:#848e89;
+    font-size: 1.2em;
+}
+
+/*MAIN CONTENT*/
+
+.card{
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px); 
+    border-radius: 10px;
+}
+
+
+.form-control{
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+#contenido {
+    width: 80%;
+    margin:auto;
+    max-width: 1280px;
+    min-height: 100vh;
+}
+/* Card products */
+.card img{
+    display:block;
+    margin:auto;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+.card-group{
+height: 95%;
+}
+
+.product {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.product img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+
+
+a,
+a .website{
+  text-decoration: none;
+  transition: all 1000ms;
+}
+
+a:hover{
+  text-decoration: none;
+  color:inherit;
+}
+
+.website:hover{
+  font-family: Serif, Arial, Helvetica, sans-serif;
+  animation: fluido ease-in-out;
+  background: linear-gradient(-45deg, #B82AAF, #873FA8, #23a6d5, #38C6BA, #28A2BF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/*FORM & text small in form   */
+
+input[type=text], input[type=email],
+input[type=number], select, textarea {
+
+    width: 100%;
+    padding: 5px;
+
+}
+
+textarea {
+    resize: none;
+}
+
+.form-text.text-muted{
+    color : rgb(225, 225, 225)!important;
+}
+
+.form-text.text-muted ul li{
+    list-style: none;
+}
+
+
+
+/*FOOTER*/
+
+footer {
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a;
+}
+
+
+#copyleft {
+    display:inline-block;
+    transform: rotate(180deg);
+}
+
+#dvu{
+    background-color: transparent;
+    text-decoration: none;
+}
+
+/*END FOOTER*/

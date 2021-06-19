@@ -5,13 +5,13 @@
 }
 
 body{
-    animation: fluido 10s ease-in-out infinite;
+    animation: fluido 20s ease-in-out infinite;
     color:#EDF2F7;
     font-family: Arial, Helvetica, sans-serif;
   }
   
 body{
-background: linear-gradient(135deg, #f1c013, #ec3d5d, #b137a9, #6e6eee, #33b3e2,#05f4bc);
+background: linear-gradient(135deg,#b137a9, #6e6eee, #33b3e2 ,#8f4fc0, #304f9b, #2970b9);
 background-size: 300%;
 }
 
@@ -34,10 +34,9 @@ header{
 
 
 .logo {
-    width: 10%;
     margin-left: 20px;
     height: 35px;
-    width: 30px;
+    width: 35px;
 }
 
 #toggler-icon{
@@ -60,11 +59,14 @@ nav a {
 }
 
 /*MAIN CONTENT*/
+.container{
+    background-color: transparent;
+}
 
 .card{
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px); 
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 
@@ -127,10 +129,14 @@ a:hover{
 /*FORM & text small in form   */
 
 input[type=text], input[type=email],
-input[type=number], select, textarea {
+input[type=number], input[type=password],
+input[type=date],
+select, textarea {
 
     width: 100%;
     padding: 5px;
+    background: inherit;
+    border-radius: 10px;
 
 }
 
@@ -146,6 +152,18 @@ textarea {
     list-style: none;
 }
 
+/* tags */
+.tags{
+  background: transparent;  
+  font-size: 12px;
+  padding: 1%;
+  margin: 1%;
+  border-color:white;
+  color:white;
+  border-left-width: 1px!important;
+}
+
+/* end tags */
 
 
 /*FOOTER*/

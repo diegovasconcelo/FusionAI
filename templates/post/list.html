@@ -34,7 +34,7 @@
                                     
                                     <ul class="list-group list-group-horizontal">
                                         {% for t in post.tag.all %}
-                                            <li class="list-group-item rounded-pill "><small>{{t.tag|truncatechars:17}}</small></li>
+                                            <li class="tags list-group-item rounded-pill ">{{t.tag|truncatechars:17}}</li>
                                         {%endfor%}
                                     </ul>
 

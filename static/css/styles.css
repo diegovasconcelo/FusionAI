@@ -46,7 +46,7 @@ header{
 }
 
 nav a {
-    color:#6c757d!important;
+    color:#acacac!important;
     text-decoration: none;
 }
 
@@ -54,9 +54,20 @@ nav a {
 .navbar-icon{
     display: inline-block;
     transform: rotate(90deg);
-    color:#848e89;
+    color:#acacac;
     font-size: 1.2em;
 }
+/* Modal */
+.modal-content{
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
+}
+
+.modal-content input[type=email]{
+    background-color: rgba(255, 255, 255, 0.75);
+}
+/* End modal */
+
 
 /*MAIN CONTENT*/
 .container{
@@ -75,11 +86,11 @@ nav a {
     backdrop-filter: blur(10px);
 }
 
-#contenido {
-    width: 80%;
+#content {
+    width: 100%;
     margin:auto;
     max-width: 1280px;
-    min-height: 100vh;
+    min-height: 50vh;
 }
 /* Card products */
 .card img{
@@ -105,15 +116,14 @@ height: 95%;
 }
 
 
-
 a,
 a .website{
   text-decoration: none;
   transition: all 1000ms;
+  color: #3a0332;
 }
 
 a:hover{
-  text-decoration: none;
   color:inherit;
 }
 

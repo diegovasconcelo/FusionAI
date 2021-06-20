@@ -10,15 +10,16 @@
 
     <div class="container">
         <div class="row">
-            <h1 class="text-center">{{article.title}}</h1>
-            <div class="col-12 m-3">
+            <h1 class="text-center mb-4">{{article.title}}</h1>
+            <div class="col-12 mb-2">
                 <form method="POST" action="{% url 'favorites_app:favoriteAdd' article.id %}">
                     {% csrf_token %}
                     <div class="d-grid gap-2 d-md-block text-center">
-                        <button class="btn border-secondary me-md-2" type="submit">add to favorite &#128420;</button>
-                        <button class="btn border-secondary" type="button">Copy link to share &#128279;</button>
-                    </form>
-                  </div>
+                        <button class="btn border-secondary me-md-2 text-white border-white" type="submit">Add to favorite &#128420;</button>
+                        <!-- <button class="btn border-secondary text-white border-white" type="button">Copy link to share &#128279;</button> -->
+                        <a href="javascript:getlink();" id="linkCopy" class="btn text-white border-white">Copy link to share &#128279;</a>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">
@@ -33,7 +34,6 @@
         </div>
 
     </div>
-
     {% include 'includes/footer.html' %}
 
 {% endblock content %}

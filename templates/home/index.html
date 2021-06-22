@@ -13,15 +13,16 @@
 
   <div class="row mb-2">
 
-    <div class="col-12 col-md-6">
-      <div class="card h-100">
-        <h5 class="card-header">{{ home.title }}! {{ home.description }}</h5>
-        <img src="{% static '/img/FAI_icon.png' %}" class="card-img-top img-fluid" alt="FusionAI Logo ">
+    <div class="col-12 col-md-10 offset-md-1">
+      <div class="card h-100 text-center">
+        <h1 class="card-header">{{ home.title }}</h1>
+        <img src="{% static '/img/AI.svg' %}" class="card-img-top img-fluid" alt="FusionAI Logo ">
         <div class="card-body">
-          <h5 class="card-title">{{ home.about_text }}</h5>
+          <h5 class="card-title">{{ home.description }}</h5>
+          <p class="card-text"><small class="text-dark">{{home.about_text}}</small></p>
         </div>
-        <div class="card-footer text-center">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <div class="card-footer">
+          <button type="button" class="btn border border-white border-3 text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Subscribe
           </button>
           <!-- Modal -->
@@ -38,8 +39,8 @@
                     {{form.email}}
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Send email</button>
+                    <button type="button" class="btn border border-secondary border-2 text-white" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn border border-primary border-2 text-white">Send email</button>
                   </div>
                 </form>
               </div>
@@ -49,7 +50,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-6">
+    <!-- <div class="col-12 col-md-6">
       <div class="card h-100">
         <img src="{{ cover_page.image.url }}" class="card-img-top" alt="{{ cover_page.title }}">
         <div class="card-body">
@@ -57,12 +58,34 @@
           <p class="card-text">{{ cover_page.content|safe|truncatewords:40 }}</p>
         </div>  
         <div class="card-footer text-center">
-          <a href="{% url 'post_app:detail' cover_page.slug %}" class="btn btn-primary">Read more</a>
+          <a href="{% url 'post_app:detail' cover_page.slug %}" class="btn border border-primary border-2 text-white">Read more</a>
+        </div>
+      </div>
+    </div> -->
+    <div class="col-12 col-md-10 mt-4 offset-md-1">
+      <div class="card h-100">
+        <div class="row align-items-center g-0">
+          <div class="col-md-4">
+            <img src="{% static '/img/WhatIsAI.png' %}" class="img-home img-fluid" alt="{{ cover_page.title }}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <p class="card-text">{{ cover_page.content|safe|truncatewords:30 }}</p>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <a href="{% url 'post_app:detail' cover_page.slug %}" class="btn border border-primary border-2 text-white">Read more</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>  
     
+  </div>  
+  
+  <div class="essentials alert m-5" role="alert">
+    &#10024; The Essentials &#10024;
+  </div>
+
   <div class="row row-cols-1 row-cols-md-2 g-4">
     {% for i in articles %}
       <div class="col">
@@ -73,15 +96,15 @@
             <p class="card-text">{{ i.content|safe|truncatewords_html:30 }}</p>
           </div>
           <div class="card-footer text-center">
-            <a href="{% url 'post_app:detail' i.slug %}" class="btn btn-primary">Read more</a>
+            <a href="{% url 'post_app:detail' i.slug %}" class="btn border border-primary border-2 text-white">Read more</a>
           </div>
         </div>
       </div>
     {% endfor %}
   </div>
 
-  <div class="alert border-primary" role="alert">
-    Lo más recientes
+  <div class="recents alert m-5" role="alert">
+    &#128293; The Most Recent &#128293;
   </div>
     
   <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -94,7 +117,7 @@
             <p class="card-text">{{ article.content|safe|truncatewords_html:30 }}</p>
           </div>
           <div class="card-footer text-center">
-            <a href="{% url 'post_app:detail' article.slug %}" class="btn btn-primary">Read more</a>
+            <a href="{% url 'post_app:detail' article.slug %}" class="btn border border-primary border-2 text-white">Read more</a>
           </div>
         </div>
       </div>

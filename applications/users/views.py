@@ -126,3 +126,9 @@ class UserVerification(generic.FormView):
     def form_valid(self, form):
         User.objects.filter(id = self.kwargs['pk']).update(is_active=True)
         return super(UserVerification, self).form_valid(form)
+
+
+class UserProfile(LoginRequiredMixin, generic.TemplateView):
+    login_url = reverse_lazy('users_app:userLogin')
+    template_name = "users/profile.html"
+

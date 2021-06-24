@@ -5,7 +5,8 @@ from .models import Category, Article
 class ArticleList(generic.ListView):
     template_name = 'post/list.html'
     context_object_name = 'posts'
-    pagintate_by = 4
+    paginate_by = 4
+
     
     def get_context_data(self, **kwargs):
         context = super(ArticleList, self).get_context_data(**kwargs)

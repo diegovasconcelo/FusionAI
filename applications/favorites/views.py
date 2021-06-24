@@ -13,6 +13,7 @@ class FavoriteItemsListView(LoginRequiredMixin, generic.ListView):
     template_name = 'favorites/list.html'
     context_object_name = 'favorite_items'
     login_url = reverse_lazy('users_app:userLogin')
+    paginate_by = 4
 
     def get_queryset(self):
         return Favorite.objects.favorite(self.request.user)

@@ -13,35 +13,74 @@
 
         <div class="row">
             <div class="col-12 col-sm-12 col-lg-8 mb-2">
-                <form class="d-flex" method="GET">
+                <form class="form-control d-flex" method="GET">
                     {% csrf_token %}
-                    <input class="form-control me-2" type="search" name="kword" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                  </form>
+                    <input class="form-control me-2" type="text" name="kword" placeholder="Search by clave letters (title)" aria-label="Search">
+                    <button class="btn border border-2 text-white" type="submit">Search</button>
+                </form>
             </div>
         </div>
 
         <div class="row">
+
+            <div class="col-12 col-sm-12 col-lg-4 d-lg-none">
+
+                <div class="card mb-4">
+                    <div class="card-body">
+
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <h5 class="card-title">Categories</h5>
+                                    </button>
+                                </h2>
+
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                                    <div class="accordion-body">
+                                        <a href="{% url 'post_app:list'%}">All</a>
+                                    </div>
+                                </div>
+
+                              {% for category in categories %}
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                                    <div class="accordion-body">
+                                        <a href="?category={{category.name}}">{{category.name}}</a>
+                                    </div>
+                                </div>
+                                {%endfor%}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+
+            </div>
+
             <div class="col-12 col-sm-12 col-lg-8">
                 
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     {% for post in posts %}
                         <div class="col">
-                            <div class="card" style="height: 100%;">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5 class="card-title text-center">{{post.title}}</h5>
+                                </div>
                                 <img src="{{post.image.url}}" class="card-img-top" alt="{{post.title}}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{post.title}}</h5>
-                                    
+                                <div class="card-body">    
+                                    <a href="?category={{post.category}}" class="text-category btn border border-1 text-white">
+                                        {{post.category}}
+                                    </a>
                                     <ul class="list-group list-group-horizontal">
                                         {% for t in post.tag.all %}
-                                            <li class="tags list-group-item rounded-pill ">{{t.tag|truncatechars:17}}</li>
+                                            <li class="tags list-group-item">{{t.tag|truncatechars:17}}</li>
                                         {%endfor%}
                                     </ul>
-
                                     <p class="card-text text-muted">{{post.content|truncatewords_html:20|safe}}</p>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <a href="{% url 'post_app:detail' post.slug %}" class="btn btn-primary">Read more</a>
+                                    <a href="{% url 'post_app:detail' post.slug %}" class="btn border border-primary border-2 text-white">Read more</a>
                                 </div>
                             </div>
                         </div>
@@ -58,16 +97,32 @@
 
             </div>
         
-            <div class="col-12 col-sm-12 col-lg-4">
+            <div class="col-12 col-sm-12 col-lg-4 d-none d-lg-block">
                 <div class="card">
                     <div class="card-body">
-                    <h5 class="card-title">Categories</h5>
-                    <ul>
-                        <li><a href="{% url 'post_app:list'%}">All</a></li>
-                        {% for category in categories %}
-                            <li><a href="?category={{category.name}}">{{category.name}}</a></li>
-                        {%endfor%}
-                    </ul>
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <h5 class="card-title">Categories</h5>
+                                    </button>
+                                </h2>
+
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                                    <div class="accordion-body">
+                                        <a href="{% url 'post_app:list'%}">All</a>
+                                    </div>
+                                </div>
+
+                              {% for category in categories %}
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                                    <div class="accordion-body">
+                                        <a href="?category={{category.name}}">{{category.name}}</a>
+                                    </div>
+                                </div>
+                                {%endfor%}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,47 +130,43 @@
 
         <!-- paginator -->
 
-        <!-- <div class="row pt-4">
-            {% if not page_obj %}
-                <p>No Existe paginacion</p>
-            {% endif %}
-            <div class='col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2'></div>
-            <div class='col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8'>
+        <div class="row pt-4">
+            <div class='col-12 col-md-8 offset-md-2'>
                 <nav aria-label="pagination">
                     <ul class="pagination pagination-sm justify-content-center">
                         {% if page_obj.has_previous %}
                             <li class="page-item">
-                                <a class="page-link navbar-dark bg-dark border border-dark" href="?page=1" tabindex="-1">&laquo;</a>
+                                <a class="pagination page-link border border-light text-white" href="?page=1" tabindex="-1">&laquo;</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link navbar-dark bg-dark border border-dark" href="?page={{page_obj.previous_page_number}}" tabindex="-1">Anterior</a>
+                                <a class="pagination page-link border border-light" href="?page={{page_obj.previous_page_number}}" tabindex="-1">Previous</a>
                             </li>
                         {% elif page_obj.number == 1  %}
                             <li class="page-item disabled">
-                                <a class="page-link navbar-dark bg-dark border border-dark" href="" tabindex="-1">&laquo;</a>
+                                <a class="pagination page-link border border-light" href="" tabindex="-1">&laquo;</a>
                             </li>
                             <li class="page-item disabled">
-                                <a class="page-link navbar-dark bg-dark border border-dark" href="" tabindex="-1">Anterior</a>
+                                <a class="pagination page-link border border-light" href="" tabindex="-1">Previous</a>
                             </li>
                         {%endif%}
         
                         <li class="page-item active">
-                            <a class="page-link navbar-dark">{{page_obj.number}} de {{page_obj.paginator.num_pages}}<span class="sr-only"></span></a>
+                            <a class="pagination page-link border border-light">{{page_obj.number}} de {{page_obj.paginator.num_pages}}<span class="sr-only"></span></a>
                         </li>
         
                         {% if page_obj.has_next %}
                             <li class="page-item">
-                                <a class="page-link navbar-dark bg-dark border border-dark" href='?page={{page_obj.next_page_number}}'> Siguiente</a>
+                                <a class="pagination page-link border border-light" href='?page={{page_obj.next_page_number}}'>Next</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link navbar-dark bg-dark border border-dark" href='?page={{page_obj.paginator.num_pages}}'>&raquo;</a>
+                                <a class="pagination page-link border border-light" href='?page={{page_obj.paginator.num_pages}}'>&raquo;</a>
                             </li>
                         {% elif not page_obj.has_next %}
                             <li class="page-item disabled">
-                                <a class="page-link navbar-dark bg-dark border border-dark" href=''> Siguiente</a>
+                                <a class="pagination page-link border border-light" href=''>Next</a>
                             </li>
                             <li class="page-item disabled">
-                                <a class="page-link navbar-dark bg-dark border border-dark" href=''>&raquo;</a>
+                                <a class="pagination page-link border border-light" href=''>&raquo;</a>
                             </li>
                         {%endif%}
         
@@ -123,8 +174,7 @@
                     </ul>
                 </nav>
             </div>
-            <div class='col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2'></div>
-        </div> -->
+        </div>
     </div>
     
     

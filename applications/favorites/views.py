@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.views import generic 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -23,12 +24,16 @@ class FavoriteAddItems(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('users_app:userLogin')
 
     def post(self, request, *args, **kwargs):
-        user = self.request.user
-        article = Article.objects.get(id=self.kwargs['pk'])
-        Favorite.objects.create(
-            user = user,
-            article = article
-        )
+        try:
+            user = self.request.user
+            article = Article.objects.get(id=self.kwargs['pk'])
+        
+            query = Favorite.objects.create(
+                user = user,
+                article = article
+            )
+        except:
+            print("This article has already been added ")    
 
         return HttpResponseRedirect(reverse('favorites_app:favoriteItems'))
 
@@ -36,4 +41,10 @@ class FavoriteAddItems(LoginRequiredMixin, generic.View):
 class FavoriteRemoveDeleteView(generic.DeleteView):
     model = Favorite
     success_url = reverse_lazy('favorites_app:favoriteItems')
+    success_message = "The post was removed successfully"
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(FavoriteRemoveDeleteView, self).delete(request, *args, **kwargs)
+
 

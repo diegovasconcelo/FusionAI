@@ -22,9 +22,9 @@ class Favorite(TimeStampedModel):
     objects = FavoriteManager()
 
     class Meta:
-        unique_together = ('user', 'article')
+        unique_together = ['user', 'article']
         verbose_name = 'favorito'
         verbose_name_plural = 'favoritos'
 
     def __str__(self):
-        return self.article.title
+        return str(self.id) + ' ' +self.article.title

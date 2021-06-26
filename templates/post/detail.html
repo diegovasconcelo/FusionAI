@@ -8,25 +8,44 @@
 
     {% include 'includes/header.html' %}
 
-    <div class="container">
+    <div id="content" class="container">
         <div class="row">
             <h1 class="text-center mb-4">{{article.title}}</h1>
+            {% if error %}
+                <div class='col-12 col-md-6 offset-md-3 text-center p-2'>
+                    <div class="message-danger alert border-2 border-danger" role="alert">
+                        {{error}}
+                    </div>
+                </div>
+            {% endif %}
+
+
             <div class="col-12 mb-2">
+                {%if favorite %}
+                    {% for data in favorite %}
+                        <form method="POST" action="{% url 'favorites_app:favoriteRemove' data.id %}">
+                            {% csrf_token %}
+                            <div class="d-grid gap-2 d-md-block text-center">
+                                <button class="btn border-secondary me-md-2 text-white border-white" type="submit">Remove from favorites &#128420;</button>
+                                <a href="javascript:getlink();" id="linkCopy" class="btn text-white border-white">Copy link to share &#128279;</a>
+                            </div>
+                        </form>
+                    {% endfor %}
+                {% else %}
                 <form method="POST" action="{% url 'favorites_app:favoriteAdd' article.id %}">
                     {% csrf_token %}
                     <div class="d-grid gap-2 d-md-block text-center">
-                        <button class="btn border-secondary me-md-2 text-white border-white" type="submit">Add to favorite &#128420;</button>
-                        <!-- <button class="btn border-secondary text-white border-white" type="button">Copy link to share &#128279;</button> -->
+                        <button class="btn border-secondary me-md-2 text-white border-white" type="submit">Add to favorites &#128420;</button>
                         <a href="javascript:getlink();" id="linkCopy" class="btn text-white border-white">Copy link to share &#128279;</a>
                     </div>
                 </form>
+                {% endif %}
             </div>
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="card h-100"> 
                     <div class="card-body">
-                        <h5 class="card-title">{{article.title}}</h5>
                         <p class="card-text text-muted">{{article.content|safe}}</p>
                     </div>
                 </div>

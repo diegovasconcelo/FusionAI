@@ -1,18 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users</title>
-</head>
-<body>
-    <h1>Ingrese el código de verificación</h1>
-    <form method="post">
-        {% csrf_token %}
+{% extends 'users/base_users.html' %}
 
-        {{form.as_p}}
+{% load static %}
 
-        <input type="submit" value="Verificar">
-    </form>
-</body>
-</html>
+{% block title %}Activate account {{article.title}}{% endblock title %}
+
+{% block content %}
+
+
+{% include 'includes/header.html' %}
+
+<div id="content" class="container">
+
+  <div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+      <div class="card">
+        <h5 class="card-header text-center">Activate account</h5>
+        <div class="card-body">
+            <p class="card-text"><small>We send an activation code to your email account. Insert code here.</small></p>
+            <form method="post" class="form-control">
+                {% csrf_token %}
+            
+                {{form.as_p}}
+                <button type="submit" class="btn border border-2 border-primary text-white m-2">Activate</button>
+              </form>
+            <!-- <p class="text-center text-decoration-none mt-4">
+                <small>If you don't have an account <a href="{% url 'users_app:userRegister'%}">Sign Up.</a></small>
+            </p> -->
+        </div>
+      </div>
+    </div>
+  </div>  
+    
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock content %}

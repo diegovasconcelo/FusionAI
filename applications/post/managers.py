@@ -9,7 +9,7 @@ class PostManager(models.Manager):
         return self.filter(public=True, in_home=True).order_by('-created')[:4]
 
     def last_articles_on_home(self):
-        return self.filter(public=True).order_by('-created')[:6]
+        return self.filter(public=True).order_by('-created')[:4]
 
     def search_article(self, kw, category):
         if len(category) > 0:

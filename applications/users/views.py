@@ -95,7 +95,7 @@ class UserPasswordUpdate(LoginRequiredMixin, generic.FormView):
     def form_valid(self, form):
         userAuth = self.request.user
         user = authenticate(
-            username = userAuth.username,
+            email = userAuth.email,
             password = form.cleaned_data['password1']
         )
 

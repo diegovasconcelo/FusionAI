@@ -12,12 +12,12 @@ from .managers import PostManager
 
 
 class Category(TimeStampedModel):
-    name = models.CharField(max_length=30, unique=True, verbose_name='nombre')
-    description = models.CharField(max_length=200, unique=True, verbose_name='descripcion')
+    name = models.CharField(max_length=30, unique=True, verbose_name='name')
+    description = models.CharField(max_length=200, unique=True, verbose_name='description')
 
     class Meta:
-        verbose_name = 'categoría'
-        verbose_name_plural = 'categorías'
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
 
     def __str__(self):
         return self.name
@@ -33,23 +33,23 @@ class Tag(TimeStampedModel):
         return self.tag
 
 class Article(TimeStampedModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='usuario')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='categoría') 
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='user')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='category') 
     tag = models.ManyToManyField("post.Tag", verbose_name='tags')
-    title = models.CharField(max_length=200, verbose_name='título')
-    content = RichTextUploadingField(verbose_name='contenido')
-    public = models.BooleanField(default=False, verbose_name='¿publicado?')
-    image = models.ImageField(upload_to='entry',verbose_name='imagen')
-    cover_page = models.BooleanField(default=False, verbose_name='¿en portada?')
-    in_home = models.BooleanField(default=False, verbose_name='¿en patalla principal?')
+    title = models.CharField(max_length=200, verbose_name='title')
+    content = RichTextUploadingField(verbose_name='content')
+    public = models.BooleanField(default=False, verbose_name='public?')
+    image = models.ImageField(upload_to='entry',verbose_name='image')
+    cover_page = models.BooleanField(default=False, verbose_name='cover page?')
+    in_home = models.BooleanField(default=False, verbose_name='On the home page?')
     slug = models.SlugField(editable=False, max_length=200)
 
     objects = PostManager()
 
 
     class Meta:
-        verbose_name = 'artículo'
-        verbose_name_plural = 'artículos'
+        verbose_name = 'article'
+        verbose_name_plural = 'articles'
     
     def __str__(self):
         return self.title

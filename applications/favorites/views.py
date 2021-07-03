@@ -22,6 +22,9 @@ class FavoriteItemsListView(LoginRequiredMixin, generic.ListView):
 
 class FavoriteAddItems(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('users_app:userLogin')
+    success_message = 'The post was added successfully'
+    error_message ='Sorry, something went wrong. Probably the item has already been added or does not exist.'
+    template_name = 'favorites/list.html'
 
     def post(self, request, *args, **kwargs):
         try:
@@ -32,19 +35,23 @@ class FavoriteAddItems(LoginRequiredMixin, generic.View):
                 user = user,
                 article = article
             )
+            messages.success(self.request, self.success_message)
         except:
-            print("This article has already been added ")    
+            messages.error(self.request, self.error_message)    
 
         return HttpResponseRedirect(reverse('favorites_app:favoriteItems'))
-
 
 class FavoriteRemoveDeleteView(generic.DeleteView):
     model = Favorite
     success_url = reverse_lazy('favorites_app:favoriteItems')
-    success_message = "The post was removed successfully"
+    success_message = 'The post was removed successfully'
+    error_message ='Sorry, something went wrong. Probably the item does not exist.'
 
     def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(FavoriteRemoveDeleteView, self).delete(request, *args, **kwargs)
-
-
+        object = self.get_object()
+        if not object:
+            messages.error(self.request, self.error_message)
+        else:
+            messages.success(self.request, self.success_message)
+        
+        return super(FavoriteRemoveDeleteView, self).delete(request, *args, **kwargs)  

@@ -140,7 +140,15 @@ class UserPasswordForm(forms.Form):
 
 
 class UserVerificationForm(forms.Form):
-    code = forms.CharField(required = True)
+    code = forms.CharField(
+        label = 'Code',
+        required = True,
+        widget = forms.PasswordInput(
+            attrs = {
+                'class': 'form-control border-white'
+            }
+        )
+    )
     
     def __init__(self, pk, *args, **kwargs):
         self.user_id = pk

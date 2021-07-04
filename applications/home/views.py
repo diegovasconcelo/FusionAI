@@ -1,4 +1,8 @@
+import json
+import os
+
 from django.shortcuts import render
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,8 +10,20 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy, reverse
 from applications.post.models import Article
+
 from .models import Home, Subscriber, Contact
 from .forms import SubscriberForm, ContactForm
+
+#email direction
+with open("secret.json") as f:
+    secret = json.loads(f.read())
+
+def get_secret(secret_name, secrets=secret):
+    try:
+        return secrets[secret_name]
+    except:
+        msg = "The variable %s does not exist" % secret_name
+        raise ImproperlyConfigured(msg)
 
 
 class HomePage(generic.TemplateView):
@@ -44,6 +60,17 @@ class SubcriberCreateView(SuccessMessageMixin, generic.CreateView):
         )
         messages.success(self.request, self.success_message)
 
+         #send email 
+        try:
+            to_email = form.cleaned_data['email']
+
+            subject = 'Thank you for subscribing'
+            message = f'Your subscription has been confirmed. \n\n The FusionAI Team.'
+            from_email = get_secret('EMAIL_USER')
+            send_mail(subject, message, from_email, [to_email])
+        except (RuntimeError, TypeError, NameError):
+            pass
+
         return HttpResponseRedirect(reverse('home_app:index'))
     
     def form_invalid(self, form):
@@ -69,7 +96,20 @@ class ContactCreateView(SuccessMessageMixin, generic.CreateView):
             email = form.cleaned_data['email'],
             message = form.cleaned_data['message']
         )
+        
         messages.success(self.request, self.success_message)
+        
+        #send email 
+        try:
+            name = form.cleaned_data['full_name']
+            to_email = form.cleaned_data['email']
+
+            subject = 'Thank you for your contact'
+            message = f'Hello {name}, thank you for sending your message. We are already working on it. \n\n The FusionAI Team.'
+            from_email = get_secret('EMAIL_USER')
+            send_mail(subject, message, from_email, [to_email])
+        except (RuntimeError, TypeError, NameError):
+            pass
 
         return HttpResponseRedirect(reverse('home_app:index'))
 

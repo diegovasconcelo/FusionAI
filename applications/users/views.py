@@ -3,6 +3,7 @@ import os
 
 from django.shortcuts import render
 from django.core.mail import send_mail
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
@@ -47,10 +48,16 @@ class UserRegister(generic.FormView):
         )
 
         #send code by email
-        subject = 'Confirmation code'
-        message = f'Hello, the code is: {code}'
-        from_email = get_secret('EMAIL_USER')
-        send_mail(subject, message, from_email,[form.cleaned_data['email']])
+        try:
+            name = form.cleaned_data['names']
+            to_email = form.cleaned_data['email']
+
+            subject = 'Confirmation code'
+            message = f'Hello {name}, the code is: {code} \n\n The FusionAI Team.'
+            from_email = get_secret('EMAIL_USER')
+            send_mail(subject, message, from_email,[to_email])
+        except(RuntimeError, TypeError, NameError):
+            pass
 
         return HttpResponseRedirect(
             reverse(
@@ -113,6 +120,7 @@ class UserVerification(generic.FormView):
     template_name = 'users/verification.html'
     form_class = UserVerificationForm
     success_url = reverse_lazy('users_app:userLogin')
+    success_message = 'Congratulations! Now, enter your credentials'
 
     def get_form_kwargs(self):
         # Return the keyword arguments for instantiating the form.
@@ -125,6 +133,9 @@ class UserVerification(generic.FormView):
 
     def form_valid(self, form):
         User.objects.filter(id = self.kwargs['pk']).update(is_active=True)
+        
+        messages.success(self.request, self.success_message)
+        
         return super(UserVerification, self).form_valid(form)
 
 

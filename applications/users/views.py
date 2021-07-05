@@ -52,8 +52,8 @@ class UserRegister(generic.FormView):
             name = form.cleaned_data['names']
             to_email = form.cleaned_data['email']
 
-            subject = 'Confirmation code'
-            message = f'Hello {name}, the code is: {code} \n\n The FusionAI Team.'
+            subject = 'Código de confirmación'
+            message = f'Hola {name}, el código es: {code} \n\n FusionAI.'
             from_email = get_secret('EMAIL_USER')
             send_mail(subject, message, from_email,[to_email])
         except(RuntimeError, TypeError, NameError):
@@ -95,6 +95,7 @@ class UserPasswordUpdate(LoginRequiredMixin, generic.FormView):
     template_name = 'users/password-update.html'
     form_class = UserPasswordForm
     success_url = reverse_lazy('users_app:userLogin')
+    error_message = 'La contraseña actual no es correcta.'
    
     # LoginRequired
     login_url = reverse_lazy('users_app:userLogin')
@@ -106,13 +107,15 @@ class UserPasswordUpdate(LoginRequiredMixin, generic.FormView):
             password = form.cleaned_data['password1']
         )
 
-        if user:
+        if not user:
+            messages.error(self.request, self.error_message)
+            return HttpResponseRedirect(reverse('users_app:userPasswordUpdate'))
+        else:
             newPassword = form.cleaned_data['password2']
             userAuth.set_password(newPassword)
             userAuth.save()
-
-        logout(self.request)
-
+            logout(self.request) 
+        
         return super(UserPasswordUpdate, self).form_valid(form)
 
 
@@ -120,7 +123,7 @@ class UserVerification(generic.FormView):
     template_name = 'users/verification.html'
     form_class = UserVerificationForm
     success_url = reverse_lazy('users_app:userLogin')
-    success_message = 'Congratulations! Now, enter your credentials'
+    success_message = 'Feicitaciones! Ahora ingresa tus credenciales.'
 
     def get_form_kwargs(self):
         # Return the keyword arguments for instantiating the form.

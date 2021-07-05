@@ -26,6 +26,22 @@ def get_secret(secret_name, secrets=secret):
         raise ImproperlyConfigured(msg)
 
 
+class Error404View(generic.TemplateView):
+    template_name = 'home/404.html'
+
+class Error500View(generic.TemplateView):
+    template_name = 'home/500.html'
+
+    @classmethod
+    def as_error_view(cls):
+        v = cls.as_view()
+        def view(request):
+            r = v(request)
+            r.render()
+            return r
+        return view
+
+
 class HomePage(generic.TemplateView):
     template_name = 'home/index.html'
 
@@ -45,8 +61,8 @@ class HomePage(generic.TemplateView):
 class SubcriberCreateView(SuccessMessageMixin, generic.CreateView):
 
     form_class = SubscriberForm
-    success_message = "Thank you for subscribing 😊"
-    error_message = "Sorry, something went wrong. Please try again 👀"
+    success_message = "Gracias por suscribirte 😊"
+    error_message = "Disculpa, algo salió mal. Inténtalo de nuevo 👀"
     template_name = 'home/index.html'
 
     def get_context_data(self, **kwargs):
@@ -64,8 +80,8 @@ class SubcriberCreateView(SuccessMessageMixin, generic.CreateView):
         try:
             to_email = form.cleaned_data['email']
 
-            subject = 'Thank you for subscribing'
-            message = f'Your subscription has been confirmed. \n\n The FusionAI Team.'
+            subject = 'Gracias por suscribirte'
+            message = f'Tu suscripción ha sido confirmada. \n\n FusionAI.'
             from_email = get_secret('EMAIL_USER')
             send_mail(subject, message, from_email, [to_email])
         except (RuntimeError, TypeError, NameError):
@@ -81,8 +97,8 @@ class SubcriberCreateView(SuccessMessageMixin, generic.CreateView):
     
 class ContactCreateView(SuccessMessageMixin, generic.CreateView):
     form_class = ContactForm
-    success_message = "Thank you for getting in touch 😊"
-    error_message = "Sorry, something went wrong. Please try again 👀"
+    success_message = "Gracias por ponerte en contacto 😊"
+    error_message = "Disculpa, algo salió mal. Inténtalo de nuevo 👀"
     template_name = 'includes/contact.html'
 
     def get_context_data(self, **kwargs):
@@ -104,8 +120,8 @@ class ContactCreateView(SuccessMessageMixin, generic.CreateView):
             name = form.cleaned_data['full_name']
             to_email = form.cleaned_data['email']
 
-            subject = 'Thank you for your contact'
-            message = f'Hello {name}, thank you for sending your message. We are already working on it. \n\n The FusionAI Team.'
+            subject = 'Gracias por ponerte en contacto'
+            message = f'Hola {name}, gracias por enviarnos un mensaje. Te responderemos lo más pronto posible. \n\n FusionAI.'
             from_email = get_secret('EMAIL_USER')
             send_mail(subject, message, from_email, [to_email])
         except (RuntimeError, TypeError, NameError):

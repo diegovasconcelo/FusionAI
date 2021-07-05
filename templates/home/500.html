@@ -1,0 +1,32 @@
+{% extends 'home/base_home.html' %}
+
+{% load static %}
+
+{% block title %}Error 500{% endblock title%}
+{% block description %}Error 404{% endblock description%}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+
+<div class="container" id="content">
+  <h4>Se produjo un error, inténtelo de nuevo más tarde.</h4>            
+
+  <div class="row">
+    <div class="col-12 col-md-8 offset-md-2">
+
+      <div class="card h-100">
+          <img src="{% static '/img/500.svg' %}" class="card-img-top" alt="img: 500">
+          <div class="card-body">
+            <p class="card-text"><a href="{% url 'home_app:index'%}">Haz clic aquí</a> para volver al inicio.</p>
+          </div>
+      </div>                
+    </div>
+  </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+
+{% endblock content %}

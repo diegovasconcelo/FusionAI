@@ -1,0 +1,24 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <h5 class="card-header" id="contact">Contacto</h5>
+                <div class="card-body">
+                    <form class="form-control" method="POST" action="{% url 'home_app:message_contact' %}">
+                        {% csrf_token %}
+                        <div class="row g-2 mb-3">
+                            <div class="col-sm-6">
+                                <input type="text" name="full_name" placeholder="Nombre" class="form-control" maxlength="100" required="" id="id_full_name">
+                            </div>
+                            <div class="col-sm">
+                                <input type="email" name="email" placeholder="Correo" class="form-control" maxlength="254" required="" id="id_email">
+                            </div>
+                        </div>
+                        <textarea class="form-control mb-3" name= "message" id="id_message" rows="3" placeholder="Mensaje"></textarea>
+                        <button type="submit" class="btn border border-2 border-success text-white">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

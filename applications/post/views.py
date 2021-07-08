@@ -13,6 +13,11 @@ class ArticleList(generic.ListView):
         context = super(ArticleList, self).get_context_data(**kwargs)
         context['categories']= Category.objects.all()
         
+        parameters = self.request.GET.copy()
+        if parameters.get('page') != None:
+            del parameters['page']
+        context['parameters'] = parameters
+        
         return context
 
     def get_queryset(self):
@@ -22,7 +27,6 @@ class ArticleList(generic.ListView):
         result = Article.objects.search_article(kw, category)
 
         return result
-
 
 class ArticleDetailView(generic.DetailView):
     model = Article
@@ -35,7 +39,7 @@ class ArticleDetailView(generic.DetailView):
             article = self.kwargs['slug']
             context['favorite'] = Favorite.objects.is_favorite(user, article)
         except:
-            context['error'] = "Sorry, something went brong."
+            context['error'] = "Disculpa, algo salió mal."
         
         return context
 

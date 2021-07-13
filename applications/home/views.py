@@ -46,16 +46,19 @@ class HomePage(generic.TemplateView):
     template_name = 'home/index.html'
 
     def get_context_data(self, **kwargs):
-        context = super(HomePage, self).get_context_data(**kwargs)
-        context["home"] = Home.objects.latest('created')
-        context["cover_page"] = Article.objects.cover_page()
-        context["articles"] = Article.objects.articles_on_home()
-        context["last_articles"] = Article.objects.last_articles_on_home()
+        try:
+            context = super(HomePage, self).get_context_data(**kwargs)
+            context["home"] = Home.objects.latest('created')
+            context["cover_page"] = Article.objects.cover_page()
+            context["articles"] = Article.objects.articles_on_home()
+            context["last_articles"] = Article.objects.last_articles_on_home()
 
-        #formSubscriptions
-        context["form"] = SubscriberForm
-        
-        return context
+            #formSubscriptions
+            context["form"] = SubscriberForm
+            
+        except:
+            print('Enter data from the admin to view content')
+            context["empty"] = "Nothing to see"
     
     
 class SubcriberCreateView(SuccessMessageMixin, generic.CreateView):

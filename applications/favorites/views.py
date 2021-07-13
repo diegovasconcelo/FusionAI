@@ -14,7 +14,7 @@ class FavoriteItemsListView(LoginRequiredMixin, generic.ListView):
     template_name = 'favorites/list.html'
     context_object_name = 'favorite_items'
     login_url = reverse_lazy('users_app:userLogin')
-    paginate_by = 4
+    paginate_by = 6
 
     def get_queryset(self):
         return Favorite.objects.favorite(self.request.user)
@@ -22,8 +22,8 @@ class FavoriteItemsListView(LoginRequiredMixin, generic.ListView):
 
 class FavoriteAddItems(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('users_app:userLogin')
-    success_message = 'The post was added successfully'
-    error_message ='Sorry, something went wrong. Probably the item has already been added or does not exist.'
+    success_message = 'El post se agregó exitosamente'
+    error_message ='Disculpa, algo salió mal. Probablemente el elemento ya está en favoritos o no existe.'
     template_name = 'favorites/list.html'
 
     def post(self, request, *args, **kwargs):
@@ -44,8 +44,8 @@ class FavoriteAddItems(LoginRequiredMixin, generic.View):
 class FavoriteRemoveDeleteView(generic.DeleteView):
     model = Favorite
     success_url = reverse_lazy('favorites_app:favoriteItems')
-    success_message = 'The post was removed successfully'
-    error_message ='Sorry, something went wrong. Probably the item does not exist.'
+    success_message = 'El post se removió exitosamente'
+    error_message ='Disculpa, algo salió mal. Probablemente el elemento no existe.'
 
     def delete(self, request, *args, **kwargs):
         object = self.get_object()

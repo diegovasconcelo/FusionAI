@@ -5,9 +5,9 @@ from .managers import UserManager
 class User(AbstractBaseUser, PermissionsMixin):
 
     GENDER = [
-        ['M', 'Man'],
-        ['W', 'Woman'],
-        ['N', 'Non binary']
+        ['N', 'No binario'],
+        ['W', 'Mujer'],
+        ['M', 'Hombre']
     ]
     
     names = models.CharField(max_length=100, blank=True, verbose_name='names')

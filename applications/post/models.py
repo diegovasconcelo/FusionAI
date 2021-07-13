@@ -23,7 +23,7 @@ class Category(TimeStampedModel):
         return self.name
 
 class Tag(TimeStampedModel):
-    tag = models.CharField(max_length=30, verbose_name='Tag')
+    tag = models.CharField(max_length=50, verbose_name='Tag')
     
     class Meta:
         verbose_name = 'tag'

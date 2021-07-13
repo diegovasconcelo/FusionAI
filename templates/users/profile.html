@@ -1,7 +1,7 @@
 {% extends 'users/base_users.html' %}
 
 {% load static %}
-{% block title %}Sign Up {{article.title}}{% endblock title %}
+{% block title %}Perfil{{article.title}}{% endblock title %}
 
 {% block content %}
 
@@ -10,23 +10,23 @@
 <div id="content" class="container">
 
   <div class="row">
-    <div class="col-12 col-sm-6 offset-md-3">
+    <div class="col-12 col-sm-8 col-md-6 offset-sm-2 offset-md-3">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title text-center">{{user.names|capfirst}} {{user.last_name|capfirst}}</h5>
                 <p class="card-text">
-                <small class="text-dark">Occupation: </small>{{user.occupation|capfirst}}
+                <small class="text-dark">Ocupación: </small>{{user.occupation|capfirst}}
                 </p>
                 <p class="card-text">
-                <small class="text-dark">Email: </small>{{user.email}}
+                <small class="text-dark">Correo: </small>{{user.email}}
                 </p>
                 <p class="card-text">
-                <small class="text-dark">Born: </small>{{user.date_of_birth}}
+                <small class="text-dark">Cumpleaños: </small>{{user.date_of_birth}}
                 </p>
-                <p class="card-text"><small class="text-dark">Last time: {{user.last_login}}</small></p>
+                <p class="card-text"><small class="text-dark">Último ingreso: {{user.last_login}}</small></p>
             </div>
             <div class="card-footer text-center">
-                <a href="{% url 'users_app:userPasswordUpdate' %}" class="btn border border-primary border-2 text-white">Change Password</a>
+                <a href="{% url 'users_app:userPasswordUpdate' %}" class="btn border border-primary border-2 text-white">Cambiar contraseña</a>
             </div>
         </div>
     </div>

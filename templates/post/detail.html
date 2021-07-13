@@ -26,8 +26,8 @@
                         <form method="POST" action="{% url 'favorites_app:favoriteRemove' data.id %}">
                             {% csrf_token %}
                             <div class="d-grid gap-2 d-md-block text-center">
-                                <button class="btn border-secondary me-md-2 text-white border-white" type="submit">Remove from favorites &#128420;</button>
-                                <a href="javascript:getlink();" id="linkCopy" class="btn text-white border-white">Copy link to share &#128279;</a>
+                                <button class="btn border border-white me-md-2 text-white" type="submit">Remover de favoritos &#128420;</button>
+                                <a href="javascript:getlink();" id="linkCopy" class="btn border border-white text-white">Copy link &#128279;</a>
                             </div>
                         </form>
                     {% endfor %}
@@ -35,8 +35,8 @@
                 <form method="POST" action="{% url 'favorites_app:favoriteAdd' article.id %}">
                     {% csrf_token %}
                     <div class="d-grid gap-2 d-md-block text-center">
-                        <button class="btn border-secondary me-md-2 text-white border-white" type="submit">Add to favorites &#128420;</button>
-                        <a href="javascript:getlink();" id="linkCopy" class="btn text-white border-white">Copy link to share &#128279;</a>
+                        <button class="btn border border-white me-md-2 text-white" type="submit">Agregar a favoritos &#128420;</button>
+                        <a href="javascript:getlink();" id="linkCopy" class="btn border border-white text-white">Copiar link &#128279;</a>
                     </div>
                 </form>
                 {% endif %}

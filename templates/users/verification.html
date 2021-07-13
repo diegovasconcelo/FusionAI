@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Activate account {{article.title}}{% endblock title %}
+{% block title %}Activar cuenta{{article.title}}{% endblock title %}
 
 {% block content %}
 
@@ -14,18 +14,15 @@
   <div class="row">
     <div class="col-12 col-md-6 offset-md-3">
       <div class="card">
-        <h5 class="card-header text-center">Activate account</h5>
+        <h5 class="card-header text-center">Activar cuenta</h5>
         <div class="card-body">
-            <p class="card-text"><small>We send an activation code to your email account. Insert code here.</small></p>
+            <p class="card-text"><small>Enviamos un código de activación a su cuenta de correo electrónico. Insertelo aquí.</small></p>
             <form method="post" class="form-control">
-                {% csrf_token %}
+              {% csrf_token %}
             
-                {{form.as_p}}
-                <button type="submit" class="btn border border-2 border-primary text-white m-2">Activate</button>
-              </form>
-            <!-- <p class="text-center text-decoration-none mt-4">
-                <small>If you don't have an account <a href="{% url 'users_app:userRegister'%}">Sign Up.</a></small>
-            </p> -->
+              {{form.as_p}}
+              <button type="submit" class="btn border border-2 border-primary text-white m-2">Activar</button>
+            </form>
         </div>
       </div>
     </div>

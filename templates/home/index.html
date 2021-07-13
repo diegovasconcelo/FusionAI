@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}{{home.title}}{% endblock title%}
+{% block title %}Inicio{% endblock title%}
 {% block description %}{{home.description}}{% endblock description%}
 
 {% block content %}
@@ -10,28 +10,40 @@
 {% include 'includes/header.html' %}
 
 <div class="container">
+  <div class='row'>
+    <div class='col-12 col-md-6 offset-md-3 text-center p-2'>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message-{{message.tags}} alert border-2 border-{{message.tags}}" role="alert">
+                    {{message}}
+                </div>
+            {% endfor %}    
+        {% endif %}
+    </div>
+  </div>  
 
   <div class="row mb-2">
 
     <div class="col-12 col-md-10 offset-md-1">
       <div class="card h-100 text-center">
         <h1 class="card-header">{{ home.title }}</h1>
-        <img src="{% static '/img/AI.svg' %}" class="card-img-top img-fluid" alt="FusionAI Logo ">
+        <img src="{% static '/img/AI.svg' %}" class="card-img-top img-fluid" alt="FusionAI Logo">
         <div class="card-body">
-          <h5 class="card-title">{{ home.description }}</h5>
-          <p class="card-text"><small class="text-dark">{{home.about_text}}</small></p>
+          <h5 class="card-title text-center">{{ home.description }}</h5>
+          <p class="card-text"><small>{{home.about_text}}</small></p>
         </div>
+        
         <div class="card-footer">
-          <button type="button" class="btn border border-white border-3 text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Subscribe
+          <button type="button" class="btn border border-white border-3 text-white" data-bs-toggle="modal" data-bs-target="#subscribeModal">
+            Suscribirme
           </button>
           <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="subscribeModal" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Subscribe</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <h5 class="modal-title" id="subscribeModalLabel">Suscribirme a FusionAI</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="post" action="{% url 'home_app:add_subscription' %}">
                   <div class="modal-body">
@@ -39,64 +51,55 @@
                     {{form.email}}
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn border border-secondary border-2 text-white" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn border border-primary border-2 text-white">Send email</button>
+                    <button type="button" class="btn border border-secondary border-2 text-white" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn border border-primary border-2 text-white">Suscribirme</button>
                   </div>
                 </form>
               </div>
             </div>
           </div>
+          
         </div>
       </div>
-    </div>
+    </div>  
 
-    <!-- <div class="col-12 col-md-6">
-      <div class="card h-100">
-        <img src="{{ cover_page.image.url }}" class="card-img-top" alt="{{ cover_page.title }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ cover_page.title }}</h5>
-          <p class="card-text">{{ cover_page.content|safe|truncatewords:40 }}</p>
-        </div>  
-        <div class="card-footer text-center">
-          <a href="{% url 'post_app:detail' cover_page.slug %}" class="btn border border-primary border-2 text-white">Read more</a>
-        </div>
-      </div>
-    </div> -->
+    {% if cover_page %}
     <div class="col-12 col-md-10 mt-4 offset-md-1">
       <div class="card h-100">
         <div class="row align-items-center g-0">
           <div class="col-md-4">
-            <img src="{% static '/img/WhatIsAI.png' %}" class="img-home img-fluid" alt="{{ cover_page.title }}">
+            <img src="{% static '/img/WhatIsAI.png' %}" class="img-card img-home img-fluid" alt="{{ cover_page.title }}">
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <p class="card-text">{{ cover_page.content|safe|truncatewords:30 }}</p>
+              <p class="card-text">{{ cover_page.content|safe|truncatewords:37 }}</p>
             </div>
           </div>
           <div class="card-footer text-center">
-            <a href="{% url 'post_app:detail' cover_page.slug %}" class="btn border border-primary border-2 text-white">Read more</a>
+            <a href="{% url 'post_app:detail' cover_page.slug %}" class="btn border border-primary border-2 text-white">Ver más</a>
           </div>
         </div>
       </div>
     </div>
+    {% endif %}
     
   </div>  
   
   <div class="essentials alert m-5" role="alert">
-    &#10024; The Essentials &#10024;
+    &#10024; Los esenciales &#10024;
   </div>
 
   <div class="row row-cols-1 row-cols-md-2 g-4">
     {% for i in articles %}
       <div class="col">
         <div class="card h-100">
-          <img src="{{ i.image.url }}" class="card-img-top" alt="{{ i.title }}">
+          <img src="{{ i.image.url }}" class="img-card card-img-top" alt="{{ i.title }}">
           <div class="card-body">
-            <h5 class="card-title">{{ i.title|truncatechars:100 }}</h5>
-            <p class="card-text">{{ i.content|safe|truncatewords_html:30 }}</p>
+            <h5 class="card-title text-center">{{ i.title|truncatechars:100 }}</h5>
+            <p class="card-text">{{ i.content|safe|truncatewords_html:30|striptags }}</p>
           </div>
           <div class="card-footer text-center">
-            <a href="{% url 'post_app:detail' i.slug %}" class="btn border border-primary border-2 text-white">Read more</a>
+            <a href="{% url 'post_app:detail' i.slug %}" class="btn border border-primary border-2 text-white">Ver más</a>
           </div>
         </div>
       </div>
@@ -104,20 +107,20 @@
   </div>
 
   <div class="recents alert m-5" role="alert">
-    &#128293; The Most Recent &#128293;
+    &#128293; Los más recientes &#128293;
   </div>
     
   <div class="row row-cols-1 row-cols-md-2 g-4">
     {% for article in last_articles %}
       <div class="col">
         <div class="card h-100">
-          <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}">
+          <img src="{{ article.image.url }}" class="img-card card-img-top" alt="{{ article.title }}">
           <div class="card-body">
-            <h5 class="card-title">{{ article.title|truncatechars:100 }}</h5>
-            <p class="card-text">{{ article.content|safe|truncatewords_html:30 }}</p>
+            <h5 class="card-title text-center">{{ article.title|truncatechars:100 }}</h5>
+            <p class="card-text">{{ article.content|safe|truncatewords_html:30|striptags }}</p>
           </div>
           <div class="card-footer text-center">
-            <a href="{% url 'post_app:detail' article.slug %}" class="btn border border-primary border-2 text-white">Read more</a>
+            <a href="{% url 'post_app:detail' article.slug %}" class="btn border border-primary border-2 text-white">Ver más</a>
           </div>
         </div>
       </div>
@@ -125,6 +128,7 @@
   </div>
 </div>
 
+{% include 'includes/contact.html' %}
 {% include 'includes/footer.html' %}
 
 

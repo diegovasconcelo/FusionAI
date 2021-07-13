@@ -1,44 +1,49 @@
 {%load static %}
-<header class="mb-4">
-  <nav class="navbar navbar-expand-lg">
+<header>
+  <nav class="navbar sticky-top navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'home_app:index' %}">
-          <img src="{% static '/img/FAI_icon.png' %}" class="logo d-inline-block align-top" alt="FuisionAI Brand">
-          FuisionAI
+          <img src="{% static '/img/FAI_icon.png' %}" class="logo d-inline-block align-top" alt="FusionAI Brand">
+          FusionAI
         </a>
+        <span class="d-flex">
+          <button id="switch" class="btn-mode" onclick="changeMode()">
+            <span class="dark-moon">🌙</span>
+            <span class="light-fusion">☀️</span>
+          </button>
+        </span>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"><span id="toggler-icon">|||</span></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'home_app:index' %}">Home</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" aria-current="page" href="{% url 'home_app:index' %}">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'post_app:list' %}">Post</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'list' %}active{% endif %}" href="{% url 'post_app:list' %}">Posts</a>
             </li>
             {% if user.id %}
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Hello, {{user.names}}
+                <a class="nav-link {% if request.resolver_match.url_name == 'favoriteItems' or request.resolver_match.url_name == 'userProfile' %}active{% endif %} dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Hola, {{user.names}}
                 </a>
-                <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="{% url 'favorites_app:favoriteItems' %}">Favorites</a></li>
-                  <li><a class="dropdown-item" href="{% url 'users_app:userProfile' %}">Profile</a></li>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item {% if request.resolver_match.url_name == 'favoriteItems' %}active{% endif %} text-center" href="{% url 'favorites_app:favoriteItems' %}">Favoritos</a></li>
+                  <li><a class="dropdown-item {% if request.resolver_match.url_name == 'userProfile' %}active{% endif %} text-center" href="{% url 'users_app:userProfile' %}">Perfil</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{% url 'users_app:userLogout' %}">Log Out</a></li>
+                  <li><a class="dropdown-item text-center" href="{% url 'users_app:userLogout' %}">Cerrar sesión</a></li>
                 </ul>
               </li>
             {% else %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'users_app:userLogin' %}">Log In</a>
+                <a class="nav-link {% if request.resolver_match.url_name == 'userLogin' %}active{% endif %}" href="{% url 'users_app:userLogin' %}">Iniciar sesión</a>
               </li>
               
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'users_app:userRegister' %}">Sign Up</a>
+                <a class="nav-link {% if request.resolver_match.url_name == 'userRegister' %}active{% endif %}" href="{% url 'users_app:userRegister' %}">Registrarse</a>
               </li>
             {% endif %}
-            
           </ul>
         </div>
       </div>

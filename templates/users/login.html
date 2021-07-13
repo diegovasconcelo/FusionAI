@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Log In {{article.title}}{% endblock title %}
+{% block title %}Iniciar sesión{{article.title}}{% endblock title %}
 
 {% block content %}
 
@@ -10,21 +10,31 @@
 {% include 'includes/header.html' %}
 
 <div id="content" class="container">
-
+  <div class='row'>
+    <div class='col-12 col-md-6 offset-md-3 text-center p-2'>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message-{{message.tags}} alert border-2 border-{{message.tags}}" role="alert">
+                    {{message}}
+                </div>
+            {% endfor %}    
+        {% endif %}
+    </div>
+  </div> 
   <div class="row">
     <div class="col-12 col-md-6 offset-md-3">
       <div class="card">
-        <h5 class="card-header text-center">Log In to FuisionAI </h5>
+        <h5 class="card-header text-center">Iniciar sesión en FusionAI </h5>
         <div class="card-body">
-            <form method="post" class="form-control">
-                {% csrf_token %}
-            
-                {{form.as_p}}
-                <button type="submit" class="btn border border-2 border-primary text-white m-2">Log In</button>
-              </form>
-            <p class="text-center text-decoration-none mt-4">
-                <small>If you don't have an account <a href="{% url 'users_app:userRegister'%}">Sign Up.</a></small>
-            </p>
+          <form method="post" class="form-control">
+            {% csrf_token %}
+        
+            {{form.as_p}}
+            <button type="submit" class="btn border border-2 border-primary text-white m-2">Iniciar sesión</button>
+          </form>
+          <p class="text-center text-decoration-none mt-4">
+            <small>Si no tienes una cuenta <a href="{% url 'users_app:userRegister'%}">regístrate.</a></small>
+          </p>
         </div>
       </div>
     </div>

@@ -2,20 +2,20 @@
 
 {% load static %}
 
-{% block title %}{{user.names|capfirst}}'s &#128420; list{% endblock title%}
+{% block title %}Favoritos de {{user.names|capfirst}}{% endblock title%}
 
 {% block content %}
 
     {% include 'includes/header.html' %}
 
     <div id="content" class="container">
-        <h1>{{user.names|capfirst}}'s favorites list</h1>
+        <h1>{{user.names|capfirst}} estos son tus favoritos</h1>
 
         <div class='row'>
             <div class='col-12 col-md-6 offset-md-3 text-center p-2'>
                 {% if messages %}
                     {% for message in messages %}
-                        <div class="message-success alert border-2 border-success" role="alert">
+                        <div class="message-{{message.tags}} alert border-2 border-{{message.tags}}" role="alert">
                             {{message}}
                         </div>
                     {% endfor %}
@@ -26,21 +26,20 @@
         <div class="row">
             
             <div class="col-12">
-                
                 <div class="row row-cols-1 row-cols-md-3 g-3">
                     {% for post in favorite_items %}
                         <div class="col">
                             <div class="card" style="height: 100%;">
-                            <img src="{{post.article.image.url}}" class="card-img-top" alt="{{post.article.title}}">
+                            <img src="{{post.article.image.url}}" class="img-card card-img-top" alt="{{post.article.title}}">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{post.article.title}}</h5>
-                                    <p class="card-text text-muted">{{post.article.content|truncatewords_html:20|safe}}</p>
+                                    <h5 class="card-title text-center">{{post.article.title}}</h5>
+                                    <p class="card-text">{{post.article.content|truncatewords_html:20|safe|striptags}}</p>
                                 </div>
                                 <form method="POST" action="{% url 'favorites_app:favoriteRemove' post.id %}">
                                     {% csrf_token %}
                                     <div class="card-footer text-center">
-                                        <a href="{% url 'post_app:detail' post.article.slug %}" class="btn border border-primary border-2 text-white">Read more</a>
-                                        <button type="submit" class="btn border border-danger border-2 text-white">Remove</button>
+                                        <a href="{% url 'post_app:detail' post.article.slug %}" class="btn border border-primary border-2 text-white">Ver más</a>
+                                        <button type="submit" class="btn border border-danger border-2 text-white">Remover</button>
                                     </div>    
                                 </form>
                                 
@@ -49,10 +48,10 @@
                     {% empty %}
                         <div class="col-md-6 offset-md-3">
                             <div class="card h-100">
-                                <img src="{% static '/img/addFav.svg' %}" class="nothing-to-see card-img-top" alt="img: Add items">
+                                <img src="{% static '/img/addFav.svg' %}" class="card-img-top" alt="img: Add items">
                                 <div class="card-body">
-                                    <h5 class="card-title">Nothing to see</h5>
-                                    <p class="card-text"><a href="{% url 'post_app:list'%}">Click here </a> to add items to Favorites.</p>
+                                    <h5 class="card-title">Nada para ver</h5>
+                                    <p class="card-text"><a href="{% url 'post_app:list'%}">Haz clic aquí </a>para agregar elementos a Favoritos.</p>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +62,7 @@
         </div>
 
         <!-- paginator -->
-
+        {% if is_paginated %}
         <div class="row pt-4">
             <div class='col-12 col-md-8 offset-md-2'>
                 <nav aria-label="pagination">
@@ -73,14 +72,14 @@
                                 <a class="pagination page-link border border-light text-white" href="?page=1" tabindex="-1">&laquo;</a>
                             </li>
                             <li class="page-item">
-                                <a class="pagination page-link border border-light" href="?page={{page_obj.previous_page_number}}" tabindex="-1">Previous</a>
+                                <a class="pagination page-link border border-light" href="?page={{page_obj.previous_page_number}}" tabindex="-1">Anterior</a>
                             </li>
                         {% elif page_obj.number == 1  %}
                             <li class="page-item disabled">
                                 <a class="pagination page-link border border-light" href="" tabindex="-1">&laquo;</a>
                             </li>
                             <li class="page-item disabled">
-                                <a class="pagination page-link border border-light" href="" tabindex="-1">Previous</a>
+                                <a class="pagination page-link border border-light" href="" tabindex="-1">Anterior</a>
                             </li>
                         {%endif%}
         
@@ -90,14 +89,14 @@
         
                         {% if page_obj.has_next %}
                             <li class="page-item">
-                                <a class="pagination page-link border border-light" href='?page={{page_obj.next_page_number}}'>Next</a>
+                                <a class="pagination page-link border border-light" href='?page={{page_obj.next_page_number}}'>Siguiente</a>
                             </li>
                             <li class="page-item">
                                 <a class="pagination page-link border border-light" href='?page={{page_obj.paginator.num_pages}}'>&raquo;</a>
                             </li>
                         {% elif not page_obj.has_next %}
                             <li class="page-item disabled">
-                                <a class="pagination page-link border border-light" href=''>Next</a>
+                                <a class="pagination page-link border border-light" href=''>Siguiente</a>
                             </li>
                             <li class="page-item disabled">
                                 <a class="pagination page-link border border-light" href=''>&raquo;</a>
@@ -109,9 +108,8 @@
                 </nav>
             </div>
         </div>
-    </div>
-    
-    
+        {% endif %}
+    </div>    
 
     {% include 'includes/footer.html' %}
 

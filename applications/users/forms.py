@@ -4,7 +4,7 @@ from .models import User
 
 class UserRegisterForm(forms.ModelForm):
     password1 = forms.CharField(
-        label = 'Password',
+        label = 'Contraseña',
         required = True,
         widget = forms.PasswordInput(
             attrs={
@@ -13,7 +13,7 @@ class UserRegisterForm(forms.ModelForm):
         )
     )
     password2 = forms.CharField(
-        label = 'Password (again)',
+        label = 'Contraseña (De nuevo)',
         required = True,
         widget = forms.PasswordInput(
             attrs={
@@ -35,7 +35,7 @@ class UserRegisterForm(forms.ModelForm):
     )
 
     names = forms.CharField(
-         label = 'Names',
+        label = 'Nombres',
         required = True,
         widget=forms.TextInput(
             attrs={'class': 'form-control border-white'}
@@ -43,7 +43,7 @@ class UserRegisterForm(forms.ModelForm):
     )
 
     last_name = forms.CharField(
-        label = 'Last name',
+        label = 'Apellidos',
         required = True,
         widget=forms.TextInput(
             attrs={'class': 'form-control border-white'}
@@ -51,7 +51,7 @@ class UserRegisterForm(forms.ModelForm):
     )
 
     occupation = forms.CharField(
-        label = 'Occupation',
+        label = 'Ocupación',
         required = True,
         widget=forms.TextInput(
             attrs={'class': 'form-control border-white'}
@@ -60,7 +60,7 @@ class UserRegisterForm(forms.ModelForm):
 
     gender = forms.ChoiceField(
         choices = User.GENDER,
-        label = 'Gender',
+        label = 'Género',
         required = True,
         widget=forms.Select(
             attrs={'class': 'form-control border-white'}
@@ -68,7 +68,7 @@ class UserRegisterForm(forms.ModelForm):
     )
 
     date_of_birth = forms.CharField(
-        label = 'Date of birth',
+        label = 'Fecha de nacimiento',
         required = True,
         widget=forms.DateInput(
             attrs={'class': 'form-control border-white','type':'date'}
@@ -81,14 +81,14 @@ class UserRegisterForm(forms.ModelForm):
         password2 = self.cleaned_data['password2']
         
         if len(password1) < 8:
-            self.add_error('password2','The password must be at least 8 characters long.')
+            self.add_error('password2','La contraseña debe tener al menos 8 caracteres.')
         if password1 != password2:
-            self.add_error('password2','Passwords do not match.')
+            self.add_error('password2','Las contraseñas no coinciden.')
 
 
 class UserLoginForm(forms.Form):
     email = forms.CharField(
-        label = 'Email',
+        label = 'Correo',
         required = True,
         widget = forms.EmailInput(
             attrs={
@@ -97,7 +97,7 @@ class UserLoginForm(forms.Form):
         )
     )
     password = forms.CharField(
-        label = 'Password',
+        label = 'Contraseña',
         required = True,
         widget = forms.PasswordInput(
             attrs={
@@ -112,14 +112,14 @@ class UserLoginForm(forms.Form):
         password = self.cleaned_data['password']
         
         if not authenticate(email = email, password = password):
-            raise forms.ValidationError('The email or password you entered is incorrect.')
+            raise forms.ValidationError('El correo o la contraseña son incorrectos.')
 
         return self.cleaned_data
 
 
 class UserPasswordForm(forms.Form):
     password1 = forms.CharField(
-        label = 'Current password',
+        label = 'Contraseña actual',
         required = True,
         widget = forms.PasswordInput(
             attrs={
@@ -129,7 +129,7 @@ class UserPasswordForm(forms.Form):
     )
 
     password2 = forms.CharField(
-        label = 'New password',
+        label = 'Nueva contraseña',
         required = True,
         widget = forms.PasswordInput(
             attrs = {
@@ -141,7 +141,7 @@ class UserPasswordForm(forms.Form):
 
 class UserVerificationForm(forms.Form):
     code = forms.CharField(
-        label = 'Code',
+        label = 'Código',
         required = True,
         widget = forms.PasswordInput(
             attrs = {
@@ -161,6 +161,6 @@ class UserVerificationForm(forms.Form):
             active = User.objects.validation_code(self.user_id, verificationCode)
             
             if not active:
-                raise forms.ValidationError('Incorrect code.')    
+                raise forms.ValidationError('Código incorrecto.')    
         else:
-            raise forms.ValidationError('Incorrect code')
+            raise forms.ValidationError('Código incorrecto')

@@ -8,4 +8,3 @@ urlpatterns = [
     path('add-subscription',views.SubcriberCreateView.as_view(), name='add_subscription'),
     path('message-contact',views.ContactCreateView.as_view(), name='message_contact')
 ]
-

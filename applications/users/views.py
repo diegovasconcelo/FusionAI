@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
@@ -30,6 +31,14 @@ class UserRegister(generic.FormView):
     template_name = 'users/register.html'
     form_class = UserRegisterForm
     success_url = reverse_lazy('home_app:index')
+
+    # Check if there is an active user
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('home_app:index'))
+        else:
+            # Instantiate a blank version of the form
+            return  self.render_to_response(self.get_context_data())
 
     def form_valid(self, form):
         
@@ -71,6 +80,14 @@ class UserLogin(generic.FormView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
     success_url = reverse_lazy('favorites_app:favoriteItems')
+    
+    # Check if there is an active user
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('home_app:index'))
+        else:
+            # Instantiate a blank version of the form
+            return  self.render_to_response(self.get_context_data())
 
     def form_valid(self, form):
         user = authenticate(
@@ -123,7 +140,7 @@ class UserVerification(generic.FormView):
     template_name = 'users/verification.html'
     form_class = UserVerificationForm
     success_url = reverse_lazy('users_app:userLogin')
-    success_message = 'Feicitaciones! Ahora ingresa tus credenciales.'
+    success_message = 'Felicitaciones! Ahora ingresa tus credenciales.'
 
     def get_form_kwargs(self):
         # Return the keyword arguments for instantiating the form.

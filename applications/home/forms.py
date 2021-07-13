@@ -10,7 +10,7 @@ class SubscriberForm(forms.ModelForm):
         widgets = {
             'email': forms.EmailInput(
                 attrs={
-                    'placeholder':'Email',
+                    'placeholder':'Correo',
                     'class': 'form-control'
                 }     
             )   

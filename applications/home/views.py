@@ -59,6 +59,8 @@ class HomePage(generic.TemplateView):
         except:
             print('Enter data from the admin to view content')
             context["empty"] = "Nothing to see"
+        
+        return context
     
     
 class SubcriberCreateView(SuccessMessageMixin, generic.CreateView):

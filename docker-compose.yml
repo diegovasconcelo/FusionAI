@@ -4,9 +4,9 @@ services:
     db:
         image: postgres
         environment: 
-            - POSTGRES_DB=
-            - POSTGRES_USER=
-            - POSTGRES_PASSWORD=
+            - POSTGRES_DB=postgres_fai
+            - POSTGRES_USER=postgres_fai
+            - POSTGRES_PASSWORD=postgres_fai
 
     web_fai: 
         build: .
